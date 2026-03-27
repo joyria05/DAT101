@@ -149,7 +149,7 @@ myAccount.withdraw(30);
 myAccount.setType(AccountTypes.Pensjon);
 myAccount.withdraw(30);
 myAccount.setType(AccountTypes.Normal);
-myAccount.withdraw(10);
+myAccount.withdraw(10);//  jeg la til 2 linjer til å se hvordan det skulle bli.
 
 
 printOut(newLine);
