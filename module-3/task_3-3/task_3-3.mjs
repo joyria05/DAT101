@@ -51,7 +51,7 @@ function Part3CalculateCircle(aRadius){
     const diameter = 2 * aRadius;
     const circumference= 2 * Math.PI * aRadius;
     const area = Math.PI * aRadius * aRadius;
-    printOut(``For a circle with radius ${aRadius}`);
+    printOut(`For a circle with radius ${aRadius}`);
     printOut(` 
     <u1>
     <1i> Diameter: ${diameter.toFixed(2)}</1i>
@@ -59,8 +59,7 @@ function Part3CalculateCircle(aRadius){
     <1i>Area: ${area.toFixed(2)}</1i>
 
     </u1>
-    
-    `);
+`);
 
   }
   Part3CalculateCircle(5);
@@ -69,6 +68,9 @@ printOut(newLine);
 
 printOut("--- Part 4 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
+
+
+printOut(`Create a function that receives the width and height of a rectangle in an object.<br>Print the circumference and area of the given rectangle.`)
 
 function Part4CalculateRectangle(aRectangle){
         const circumference = 2* (aRectangel.width + aRectangle.height);
@@ -93,26 +95,24 @@ printOut(newLine);
 
 printOut("--- Part 5 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
-const ETempratureType={'
-    
-    
+
+const ETempratureType={
+ 
 Kelvin: 1,
 celsius: 2,
 Fahrenheit: 3,
 
 }
 
-
-
 function part5ConvertTemp(aTemp,aTempType){
-  let kelvin=0 ,celsius=0, Fahrenheit=0;
+  let kelvin=0 ,celsius=0, fahrenheit=0;
   let tempTypeName="";
 
    switch(aTempType) {
 case EtempratureType.kelvin:
     kelvin=aTemp;
     celsius=kelvin-273.15;
-    Fahrenheit= (kelvin-273.15)* 9/5 + 32;
+    fahrenheit= (kelvin-273.15)* 9/5 + 32;
     tempTypeName="Kelvin";
     break;
     case ETempratureType.Celsius:
@@ -136,7 +136,7 @@ case EtempratureType.kelvin:
    printOut(`&nbsp;Fahrenheit: ${fahrenheit.toFixed(0)}`);
    printOut("");
 }
-part5ConvertTemp(300,ETempType.kelvin);
+part5ConvertTemp(300,ETempType.Kelvin);
 part5ConvertTemp(26.85, ETempType.Celsius);
 part5ConvertTemp(80.33,ETempType.Fahrenheit);
 printOut(newLine);
@@ -160,13 +160,13 @@ function Part6Calculate(aGrosssAmount, aTaxGroup){
         taxRate =15;
         break;
 
-        case"hotel"
+        case"hotel":
         case"transport":
         case"cinema":
         taxRate=10;
         break;
 
-        default;
+        default:
          printOut("Error: Unkown tax group!");
         return;
     }
@@ -195,32 +195,43 @@ printOut("--- Part 7 -----------------------------------------------------------
 If speed is missing, calculate speed. If time is missing, calculate time. If distance is missing, calculate the
 distance. If more than one parameter is missing, return NaN.*/
 
-function Part7CalculateSpeedDistanceTime(distance,time,speed){
+function Part7CalculateSpeedDistanceTime(aDistance,aTime,aSpeed){
 
-    if (speed === null);{
-        speed = distance / time;
-        printOut("Speed: " + speed.toFixed(2));
-        return speed;
-    }
-     else if (time=== null) {
-        time = distance / speed;
-        printOut("Time: " + time.toFixed(2));
-        return time;
-    }
+    if (aSpeed === null){
 
-    else if (distance === null){
-        distance = speed *time;
-        printOut("Distance: " + distance.toFixed(2));
-        return distance;
-    }
+         if (!aTime || aTime=== 0  || !aDistance ) {
+            printOut(" Error: Time or Distance cannot be zero or null when calculateing speed!");
+            return NaN;
+        }
+        printOut(`Calculated Speed: ${aSpeed.toFixed(2)} units/time`);
+        return aSpeed;
+    
+      }else if (aTime=== null) {
 
-    else{
-        printOut(" Error: One value must be missing!");
+            if( !aSpeed || aSpeed===0 || !aDistance ){
+                printOut(" Error: Speed or Distance cannot be zero or null when calculating Time!");
+                return NaN;}
+
+            }
+        aTime = aDistance / aSpeed;
+        printOut(`Calculated Time: ${aTime.toFixed(2)} timeunits`);
+        return aTime;
+    } else if (aDistance === null){
+
+        if (!aSpeed || !aTime) {
+            printOut(" Error: Speed or Time cannot be null when calculating distance!");
         return NaN;
+        
     }
+        aDistance = aSpeed * aTime;
+        printOut(`Calculated Distance: ${aDistance.toFixed(2)} units`);
+       return aDistance;
+    }
+
 }
 
-Part7CalculateSpeedDistanceTime(100,2, null);// fart
+
+Part7CalculateSpeedDistanceTime(100, 2 , null); // fart
 Part7CalculateSpeedDistanceTime(100, null, 50);// tid 
 Part7CalculateSpeedDistanceTime(null, 2, 50);// avstand
 Part7CalculateSpeedDistanceTime( null, null, 50);// NaN
@@ -232,26 +243,26 @@ printOut(newLine);
 printOut("--- Part 8 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
 
-function Part8AdjustString(aText, aMaxSize, aChar, aInsertAtEnd){
-    let result= aText;
-    while (result.length < aMaxsize) {
-        if (aInsertAtEnd=== true){
-            result = result + aChar;
+function Part8AdjustString(aText, MaxSize, aChar, aInsertAtEnd){
+    let adjustedText= aText;
+    let length =aText.length;
+    while (length < MaxSize) {
+        if (aInsertAtEnd){
+            adjustedText += aChar;
         
+        }else{
+            adjustedText = aChar + adjustedText;
         }
-        else{
-            result = aChar + result;
-        }
+        length++;
     }
-    printOut("Adjusted String:");
-    return result;
+    printOut(`Adjusted String: ${adjustedText}`);
+    return adjustedText;
 }
-printOut("Replace this with you answer!");
+
+Part8AdjustString("Hello",30,"*", true);
+Part8AdjustString("World", 25, "#", false);
+Part8AdjustString("This is å right aligned text.", 50, "&nbsp;", false);
 printOut(newLine);
-
-Part8AdjustString("Hello", 20, "*", true);
-Part8AdjustString("Hello", 20, "#", false);
-
 printOut("--- Part 9 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
 printOut(newLine)
@@ -292,11 +303,11 @@ function Part10Factorial(aNumber){
     Part10Step++;
     Part10IntermediateSteps+= `Step ${Part10Step}: ${aNumber}* Factorial(${aNumber - 1})=${result}<br>`;
     return result;
-}
+    }
 }
 
 const numberforFactorial = 5;
-const factorialResult= Part10Factorial(aNumber -1);
+const factorialResult= Part10Factorial(numberforFactorial);
 printOut(`Factorial of ${numberforFactorial} is ${factorialResult}`);
 printOut("Intermediate Steps:<br>"+ Part10IntermediateSteps);
 
