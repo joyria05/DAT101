@@ -47,17 +47,41 @@ const MovieGenre = [
 
 //--- Part 1 ----------------------------------------------------------------------------------------------
 /* Put your code below here!*/
+function cmbTask1CalculateClick() {
+  const width = parseInt(document.getElementById("txtRectWidth").value);
+  const height = parseInt(document.getElementById("txtRectHeight").value);
 
+  const area = width * height;
+  const perimeter = 2 * (width + height);
+
+  document.getElementById("txtTask1Output").innerHTML =
+    `Width: ${width}, Height: ${height}<br>Perimeter = ${perimeter}, Area = ${area}`;
+}
+
+document.getElementById("cmbTask1Calculate").onclick = cmbTask1CalculateClick;
 //--- Part 2 ----------------------------------------------------------------------------------------------
 /* Put your code below here!*/
+const task2Words = [];
+
+document.getElementById("txtTask2Word").addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    const word = e.target.value;
+    task2Words.push(word);
+
+    document.getElementById("txtTask2Output").innerHTML =
+      "Words: " + task2Words.join(", ");
+
+    e.target.value = "";
+  }
+});
 
 //--- Part 3 ----------------------------------------------------------------------------------------------
 /* Put your code below here!*/
 
 const chkTask3= document.getElementsByName("chkTask3");
 const cmbTask3CheckAnswer = document.getElementById("cmbTask3CheckAnswer");
-const txtTask3Output= document.getElementById("txtTask2Output");
-txtTask3Output. innerHTML ="";
+const txtTask3Output= document.getElementById("txtTask3Output");
+txtTask3Output.innerHTML ="";  
 function cmbTask3CheckAnswerClick(){
   for(let i = 0; i < chkTask3.length; i++){
     const chkBox = chkTask3[i];
@@ -102,9 +126,58 @@ for(let i = 0; i< CarTypes.length; i++){
 
 //--- Part 5 ----------------------------------------------------------------------------------------------
 /* Put your code below here!*/
+const Animals = ["Dog", "Cat", "Horse", "Cow", "Sheep"];
+
+const selectTask5Animals = document.getElementById("selectTask5Animals");
+const txtTask5Output = document.getElementById("txtTask5Output");
+
+// fyll dropdown
+for (let i = 0; i < Animals.length; i++) {
+  const option = document.createElement("option");
+  option.value = i;
+  option.textContent = Animals[i];
+  selectTask5Animals.appendChild(option);
+}
+
+// når bruker velger
+selectTask5Animals.addEventListener("change", function () {
+  const index = selectTask5Animals.value;
+  const animal = Animals[index];
+
+  txtTask5Output.innerHTML = "You selected: " + animal + " (index " + index + ")";
+});
 
 //--- Part 6 ----------------------------------------------------------------------------------------------
 /* Put your code below here!*/
+const selectTask6Girls = document.getElementById("selectTask6Girls");
+const txtTask6Output = document.getElementById("txtTask6Output");
 
+for (let i = 0; i < GirlsNames.length; i++) {
+  const option = document.createElement("option");
+  option.value = i;
+  option.textContent = GirlsNames[i];
+  selectTask6Girls.appendChild(option);
+}
+
+selectTask6Girls.addEventListener("change", function () {
+  const index = selectTask6Girls.value;
+  txtTask6Output.innerHTML = "You selected: " + GirlsNames[index];
+});
 //--- Part 7 ----------------------------------------------------------------------------------------------
 /* Put your code below here!*/
+const tblMoviesBody = document.getElementById("tblMovies").getElementsByTagName("tbody")[0];
+
+function addMovie() {
+  const title = document.getElementById("txtMovieTitle").value;
+  const genre = MovieGenre[document.getElementById("selectMovieGenre").value];
+  const director = document.getElementById("txtMovieDirector").value;
+  const rate = document.getElementById("txtMovieRate").value;
+
+  const row = tblMoviesBody.insertRow();
+  row.insertCell().innerHTML = title;
+  row.insertCell().innerHTML = genre;
+  row.insertCell().innerHTML = director;
+  row.insertCell().innerHTML = rate;
+}
+
+document.getElementById("cmbAddMovie").onclick = addMovie;
