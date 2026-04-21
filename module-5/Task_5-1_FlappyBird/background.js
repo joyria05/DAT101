@@ -6,19 +6,27 @@ import{TSprite} from "libSprite";
 export class TBackground {
     #spriteBackground;
     #spriteGround;
-#spCountDown;
 
-    constructor(aSPI) {
+
+    constructor(aSpcvs,aSPI) {
         this.#spriteBackground = new TSprite (aSpcvs, aSPI.background,0,0);
-        const GroundPosY= aSPI.background.height;
-        this.#spriteGround=new TSprite(aSpcvs, aSPI.groundPosY);
+        
+        const groundPosY= aSPI.background.height- aSPI.ground.height;
+        this.#spriteGround=new TSprite(aSpcvs, aSPI.ground, 0, groundPosY);
     }
 
-//constructor(SpriteInfoList)//
+
+setDayNight(isDay) {
+    this.#spriteBackground.index = isDay ? 0 : 1;
+}
+
+
+
+
 
 
     drawBackground(){
-        this#spriteBackground.draw();
+        this.#spriteBackground.draw();
     }
     
 
@@ -27,11 +35,12 @@ export class TBackground {
     }
     
     animate (){
-        const x= this.#spriteGround.x + (this.#spriteGround .width/ 2);
+        const x= this.#spriteGround.x + (this.#spriteGround.width/ 2);
         if(x < 5){
             this.#spriteGround.x= 0;
         }else{
             this.#spriteGround.x--;
-            }
+            
         }
     }
+}

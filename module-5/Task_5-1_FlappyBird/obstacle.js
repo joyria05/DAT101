@@ -1,8 +1,8 @@
-"use" strict";
+"use strict";
 import { TSprite } from "libSprite";
-import {hero, EGameStatus, menu } from"./Task_5-1_FlappyBird.mjs";
+import { hero, EGameStatus } from "./FlappyBird.mjs";
 
-const EasyflyerGap =150;
+const EasyFlyerGap =150;
 const HardFlyerGap =100;
 const MinimumProtrusion =30;
 
@@ -12,16 +12,21 @@ export class TObstacle {
 #spUp;
 #spDown;
 #spi;
-COnstructor(aSpcvs,aSPI){
+
+constructor(aSpcvs,aSPI) {
     const x= 600;
     this.#spi =aSPI;
 
     const gap = Math.ceil(Math.random()*(EasyFlyerGap- HardFlyerGap) + HardFlyerGap);
+    
     const minTop = -this.#spi.height+ MinimumProtrusion;
     const maxTop = -MinimumProtrusion;
-    let top = Math.ceil(Math.random()*(maxTop - minTop);
+   
+    let top = Math.ceil(Math.random() * (maxTop - minTop) + minTop);
+    
     const minBottom= 400- MinimumProtrusion;
     let topWithGap= this.#spi.height + top + gap;
+   
     if(topWithGap> minBottom){
         const adjustment = topWithGap - minBottom;
         top-= adjustment;
@@ -31,19 +36,37 @@ COnstructor(aSpcvs,aSPI){
 
 
     this.#spDown=new TSprite(aSpcvs,aSPI,x, topWithGap);
-    this.#spDown.index = 2 ;
+    this.#spDown.index = 3;
+
     this.#spUp = new TSprite(aSpcvs,aSPI, x, top);
+    this.#spUp.index = 2;
     }
 
-
+   
     get x (){
+        return this.#spDown.x;
+
+    }
+
+    get width (){
         return this.#spDown.width;
 
     }
 
+    setDayNight(isDay) {
+        if (isDay) {
+            this.#spUp.index = 0;
+            this.#spDown.index = 1;
+        } else {
+            this.#spUp.index = 2;
+            this.#spDown.index = 3;
+        }
+    }
+    
+
         draw(){
         this.#spDown.draw();
-    this.#spUp.draw();
+        this.#spUp.draw();
     }
 
 
@@ -58,18 +81,12 @@ COnstructor(aSpcvs,aSPI){
             EGameStatus.state = EGameStatus.heroIsDead;
             hero.animationSpeed =0;
             menu.stopSound();
-            hero.Flap();
+            hero.flap();
             hero.dead();
         }
 
-
-
-
-    }
-}
-
-
-
+    
+   }
 
     // end of class TObstacle
 }

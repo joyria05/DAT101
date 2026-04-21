@@ -1,0 +1,89 @@
+"use strict";
+import{TSprite} from "libSprite";
+import {EGameStatus, menu} from "./FlappyBird.mjs";
+import {TSineWave} from "../../common/script/lib2d.mjs";
+import { TSoundFile } from "../../common/script/libSound.mjs";
+
+const fnFood = "./Task_5-1_FlappyBird/Media/food.mp3";
+const fnHeroIsDead = "./Task_5-1_FlappyBird/Media/heroIsDead.mp3";
+const fnGameOver = "./Task_5-1_FlappyBird/Media/gameOver.mp3";
+
+
+export class THero extends TSprite{
+    #gravity;
+    #speed;
+    #wave;
+    #sfFood;
+    #sfHeroIsDead;
+    #sfGameOver;
+
+
+    constructor(aSpcvs, aSPI) {
+        super(aSpcvs, aSPI, 100, 20);
+        this.animationSpeed = 20;
+        this.#gravity =  9.81 /100;
+        this.#speed = 0;
+
+
+        this.#wave = new TSineWave(1, 1);
+        this.y += this.#wave.value;
+
+
+        this.#sfFood = null;
+        this.#sfHeroIsDead = null;
+        this.#sfGameOver = null;
+    }
+
+
+     restart() {
+        
+        this.y = 20;
+        this.#speed = 0;
+        this.rotation= 0;
+        this.animationSpeed= 20;
+     }
+    eat() {
+        if(this.#sfFood === null){
+            this.#sfFood = new TSoundFile(fnFood);
+        } else {
+            this.#sfFood.stop();
+        }
+        this.#sfFood.play();
+
+    }
+
+    animate() {
+const hasGravity = EGameStatus.state === EGameStatus.gaming ||
+                   EGameStatus.state === EGameStatus.heroIsDead;
+
+ if (hasGravity){
+    if(this.y < 400 - this.height){
+        this.#speed += this.#gravity;
+        this.y += this.#speed;
+     if (this.rotation < 90){
+        this.rotation = this.#speed * 25;
+     }   
+    }else{
+        EGameStatus.state = EGameStatus.gameOver;
+        menu.stopSound();
+        this.animationSpeed = 0;
+        this.#sfGameOver = new  TSoundFile(fnGameOver);
+        this.#sfGameOver.play();
+    }
+ } else if (EGameStatus.state === EGameStatus.idle) {
+
+        this.y += this.#wave.value;
+    }
+  } //slutt på animasjon
+
+
+    dead(){
+        this.#sfHeroIsDead = new TSoundFile(fnHeroIsDead);
+        this.#sfHeroIsDead.play();
+    }
+
+    flap (){
+        this.#speed = -3.5;
+        this.rotation = 0;
+    }
+}
